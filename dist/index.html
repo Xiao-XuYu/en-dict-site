@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="EnDict · 一本随身的英语词典，支持词形查询与丰富释义。" />
+    <meta name="theme-color" content="#f4efe4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#101617" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="apple-touch-icon" href="./favicon.svg" />
+    <title>EnDict</title>
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('ciyu.theme');
+          var theme = stored === 'light' || stored === 'dark'
+            ? stored
+            : window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+          document.documentElement.dataset.theme = theme;
+        } catch (e) {}
+      })();
+    </script>
+    <script type="module" crossorigin src="./assets/index-Bu1j_3-c.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-B6Nvm0Ip.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    <noscript>
+      <div style="padding:48px 24px;font-family:system-ui,sans-serif;line-height:1.8">
+        EnDict需要启用 JavaScript 才能查询词库。
+      </div>
+    </noscript>
+  </body>
+</html>
