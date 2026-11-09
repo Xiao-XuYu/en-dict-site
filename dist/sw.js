@@ -79,13 +79,12 @@ function isDataRequest(url) {
 }
 
 /** Backend address the user picked in the app settings ("" when unset). */
-function configuredServiceBase() {
+async function configuredServiceBase() {
   try {
-    const raw = localStorage.getItem('endict.settings');
-    if (!raw) return '';
-    const parsed = JSON.parse(raw);
-    const base = typeof parsed.serviceBase === 'string' ? parsed.serviceBase.trim() : '';
-    return base.replace(/\/+$/, '');
+    const cache = await caches.open('endict-settings');
+    const response = await cache.match('/service-base');
+    if (!response) return '';
+    return (await response.text()).trim().replace(/\/+$/, '');
   } catch {
     return '';
   }
@@ -96,7 +95,7 @@ function configuredServiceBase() {
  * The worker may load http:// content that the https:// page itself may not.
  */
 async function relayImage(request, name) {
-  const base = configuredServiceBase();
+  const base = await configuredServiceBase();
   if (!base) return null;
   const cache = await caches.open(IMAGE_CACHE);
   const cached = await cache.match(request);
