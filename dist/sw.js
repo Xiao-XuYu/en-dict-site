@@ -1,84 +1,19 @@
-/* EnDict service worker: offline app shell.
- *
- * - Navigations: network first, cached index.html as the offline fallback.
- * - Hashed build assets / wasm / icons: cache first, refreshed on demand.
- * - Dictionary shards under /data/ are left to the app's IndexedDB cache and
- *   the HTTP cache, so the same bytes are not stored twice.
- * - Illustrations: relayed to the backend configured in the app settings, so
- *   an https:// page can show pictures from an http:// server (mixed content
- *   blocks the page from requesting them directly).
+/* EnDict service worker (diagnostic build): relay illustrations to the backend.
+ * Temporary build used to find out how the browser treats http:// fetches
+ * made by a service worker on an https:// page.
  */
 
-const VERSION = 'endict-v4';
-const IMAGE_CACHE = 'endict-images-v1';
+const VERSION = 'endict-diag';
 const IMAGE_FILE = /\/images\/([a-z0-9][a-z0-9-]*\.webp)$/;
-const SHELL = [
-  './index.html',
-  './manifest.webmanifest',
-  './favicon.svg',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/apple-touch-icon.png',
-];
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    (async () => {
-      const cache = await caches.open(VERSION);
-      await Promise.all(
-        SHELL.map((url) =>
-          cache.add(new Request(url, { cache: 'reload' })).catch(() => undefined),
-        ),
-      );
-      await self.skipWaiting();
-    })(),
-  );
+  event.waitUntil(self.skipWaiting());
 });
 
 self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    (async () => {
-      const keys = await caches.keys();
-      await Promise.all(
-        keys
-          .filter((key) => key.startsWith('endict-') && key !== VERSION)
-          .map((key) => caches.delete(key)),
-      );
-      await self.clients.claim();
-    })(),
-  );
+  event.waitUntil(self.clients.claim());
 });
 
-self.addEventListener('message', (event) => {
-  const data = event.data;
-  if (!data || data.type !== 'endict:cache' || !Array.isArray(data.urls)) return;
-  const urls = data.urls.filter(
-    (url) => typeof url === 'string' && url.startsWith(self.location.origin),
-  );
-  event.waitUntil(
-    (async () => {
-      const cache = await caches.open(VERSION);
-      await Promise.all(
-        urls.slice(0, 40).map(async (url) => {
-          try {
-            const request = new Request(url);
-            if (await cache.match(request)) return;
-            const response = await fetch(request);
-            if (response.ok) await cache.put(request, response);
-          } catch {
-            // Best effort: assets stay available through the HTTP cache.
-          }
-        }),
-      );
-    })(),
-  );
-});
-
-function isDataRequest(url) {
-  return url.pathname.includes('/data/');
-}
-
-/** Backend address the user picked in the app settings ("" when unset). */
 async function configuredServiceBase() {
   try {
     const cache = await caches.open('endict-settings');
@@ -90,85 +25,49 @@ async function configuredServiceBase() {
   }
 }
 
-/**
- * Fetch an illustration from the configured backend on behalf of the page.
- * The worker may load http:// content that the https:// page itself may not.
- */
-async function relayImage(request, name) {
-  const base = await configuredServiceBase();
-  if (!base) return null;
-  const cache = await caches.open(IMAGE_CACHE);
-  const cached = await cache.match(request);
-  if (cached) return cached;
+async function probe(base, name) {
+  const out = { base, name };
+  const url = `${base}/images/${name}`;
   try {
-    const response = await fetch(`${base}/images/${name}`, { cache: 'no-store' });
-    if (!response.ok) return null;
-    await cache.put(request, response.clone());
-    return response;
-  } catch {
-    return null;
+    const r = await fetch(url);
+    out.plain = `${r.status} ${r.type}`;
+  } catch (e) {
+    out.plain = 'ERR ' + String(e);
   }
+  try {
+    const r = await fetch(url, { mode: 'no-cors' });
+    out.noCors = `${r.status} ${r.type}`;
+  } catch (e) {
+    out.noCors = 'ERR ' + String(e);
+  }
+  try {
+    const r = await fetch(`${base}/health`);
+    out.health = `${r.status} ${r.type}`;
+  } catch (e) {
+    out.health = 'ERR ' + String(e);
+  }
+  try {
+    const r = await fetch(url, { cache: 'no-store', credentials: 'omit' });
+    out.noStore = `${r.status} ${r.type}`;
+  } catch (e) {
+    out.noStore = 'ERR ' + String(e);
+  }
+  return JSON.stringify(out);
 }
 
 self.addEventListener('fetch', (event) => {
   const request = event.request;
   if (request.method !== 'GET') return;
-
   const url = new URL(request.url);
-  if (url.origin === self.location.origin) {
-    const image = IMAGE_FILE.exec(url.pathname);
-    if (image) {
-      event.respondWith(
-        (async () => {
-          const relayed = await relayImage(request, image[1]);
-          if (relayed) return relayed;
-          return fetch(request);
-        })(),
-      );
-      return;
-    }
-  }
   if (url.origin !== self.location.origin) return;
-  // The manifest and shards manage their own freshness; don't intercept them.
-  if (isDataRequest(url)) return;
-  if (request.cache === 'no-cache' || request.cache === 'no-store') return;
-
-  if (request.mode === 'navigate') {
-    event.respondWith(
-      (async () => {
-        try {
-          const response = await fetch(request);
-          if (response.ok) {
-            const cache = await caches.open(VERSION);
-            await cache.put('./index.html', response.clone());
-          }
-          return response;
-        } catch (error) {
-          return (
-            (await caches.match(request)) ||
-            (await caches.match('./index.html')) ||
-            Response.error()
-          );
-        }
-      })(),
-    );
-    return;
-  }
-
+  const image = IMAGE_FILE.exec(url.pathname);
+  if (!image) return;
   event.respondWith(
     (async () => {
-      const cached = await caches.match(request);
-      if (cached) return cached;
-      try {
-        const response = await fetch(request);
-        if (response.ok && (response.type === 'basic' || response.type === 'default')) {
-          const cache = await caches.open(VERSION);
-          await cache.put(request, response.clone());
-        }
-        return response;
-      } catch (error) {
-        return cached || Response.error();
-      }
+      const base = await configuredServiceBase();
+      if (!base) return new Response('diag: no base in cache', { status: 599 });
+      const report = await probe(base, image[1]);
+      return new Response(report, { status: 599, headers: { 'content-type': 'text/plain' } });
     })(),
   );
 });
