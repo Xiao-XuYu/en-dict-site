@@ -4,9 +4,14 @@
  * - Hashed build assets / wasm / icons: cache first, refreshed on demand.
  * - Dictionary shards under /data/ are left to the app's IndexedDB cache and
  *   the HTTP cache, so the same bytes are not stored twice.
+ * - Illustrations: relayed to the backend configured in the app settings, so
+ *   an https:// page can show pictures from an http:// server (mixed content
+ *   blocks the page from requesting them directly).
  */
 
-const VERSION = 'endict-v2';
+const VERSION = 'endict-v3';
+const IMAGE_CACHE = 'endict-images-v1';
+const IMAGE_FILE = /\/images\/([a-z0-9][a-z0-9-]*\.webp)$/;
 const SHELL = [
   './index.html',
   './manifest.webmanifest',
@@ -73,11 +78,57 @@ function isDataRequest(url) {
   return url.pathname.includes('/data/');
 }
 
+/** Backend address the user picked in the app settings ("" when unset). */
+function configuredServiceBase() {
+  try {
+    const raw = localStorage.getItem('endict.settings');
+    if (!raw) return '';
+    const parsed = JSON.parse(raw);
+    const base = typeof parsed.serviceBase === 'string' ? parsed.serviceBase.trim() : '';
+    return base.replace(/\/+$/, '');
+  } catch {
+    return '';
+  }
+}
+
+/**
+ * Fetch an illustration from the configured backend on behalf of the page.
+ * The worker may load http:// content that the https:// page itself may not.
+ */
+async function relayImage(request, name) {
+  const base = configuredServiceBase();
+  if (!base) return null;
+  const cache = await caches.open(IMAGE_CACHE);
+  const cached = await cache.match(request);
+  if (cached) return cached;
+  try {
+    const response = await fetch(`${base}/images/${name}`, { cache: 'no-store' });
+    if (!response.ok) return null;
+    await cache.put(request, response.clone());
+    return response;
+  } catch {
+    return null;
+  }
+}
+
 self.addEventListener('fetch', (event) => {
   const request = event.request;
   if (request.method !== 'GET') return;
 
   const url = new URL(request.url);
+  if (url.origin === self.location.origin) {
+    const image = IMAGE_FILE.exec(url.pathname);
+    if (image) {
+      event.respondWith(
+        (async () => {
+          const relayed = await relayImage(request, image[1]);
+          if (relayed) return relayed;
+          return fetch(request);
+        })(),
+      );
+      return;
+    }
+  }
   if (url.origin !== self.location.origin) return;
   // The manifest and shards manage their own freshness; don't intercept them.
   if (isDataRequest(url)) return;

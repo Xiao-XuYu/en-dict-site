@@ -287,10 +287,10 @@
             </div>`:""}
       ${at()}
     </main>`}function ul(e){const n=st("div","shell levels-page"),o=Se.manifest.levels??{},s=Gi.filter(d=>o[d]);for(const d of Object.keys(o))s.includes(d)||s.push(d);const l=e&&Object.prototype.hasOwnProperty.call(o,e)?e:"";n.innerHTML=`${Ft(!1)}
-    ${s.length?l?cl(l,o[l],s):ll(s,o):`<main class="levels-main"><div class="empty-state">${p("分级数据尚未生成，请重新构建词库后再试。","Graded data has not been generated yet. Rebuild the dictionary and try again.")}</div>${at()}</main>`}`;const c=n.querySelector(".topbar-title");return c&&(c.textContent=l?Ot(l,o[l].title):p("分级词表","Graded word lists")),document.title=l?`${Ot(l,o[l].title)} · EnDict`:`${p("分级词表","Graded word lists")} · EnDict`,n}function dl(e){return e.trim().toLowerCase().replace(/’/g,"'").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||"x"}function fl(e){const n=`${qi()}/images/${dl(e)}.webp`;return`<figure class="word-figure">
+    ${s.length?l?cl(l,o[l],s):ll(s,o):`<main class="levels-main"><div class="empty-state">${p("分级数据尚未生成，请重新构建词库后再试。","Graded data has not been generated yet. Rebuild the dictionary and try again.")}</div>${at()}</main>`}`;const c=n.querySelector(".topbar-title");return c&&(c.textContent=l?Ot(l,o[l].title):p("分级词表","Graded word lists")),document.title=l?`${Ot(l,o[l].title)} · EnDict`:`${p("分级词表","Graded word lists")} · EnDict`,n}function dl(e){return e.trim().toLowerCase().replace(/’/g,"'").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||"x"}function fl(e){const n=`${dl(e)}.webp`,o=qi();return o?location.protocol==="https:"&&o.startsWith("http:")?`images/${n}`:`${o}/images/${n}`:`images/${n}`}function hl(e){const n=fl(e);return`<figure class="word-figure">
       <img src="${y(n)}" alt="${y(e)}" loading="lazy" decoding="async" onerror="this.closest('figure').remove()" />
       <figcaption><a href="https://github.com/designfuchen/word-atlas" target="_blank" rel="noopener noreferrer">Word Atlas</a> · CC BY 4.0</figcaption>
-    </figure>`}function mt(e,n){return J()?`<h2 class="sec-title"><span>${y(n)}</span></h2>`:`<h2 class="sec-title"><span>${y(e)}</span><em>${y(n)}</em></h2>`}function hl(){return`<div class="word-skeleton" aria-hidden="true">
+    </figure>`}function mt(e,n){return J()?`<h2 class="sec-title"><span>${y(n)}</span></h2>`:`<h2 class="sec-title"><span>${y(e)}</span><em>${y(n)}</em></h2>`}function pl(){return`<div class="word-skeleton" aria-hidden="true">
       <div class="sk sk-badge"></div>
       <div class="sk sk-title"></div>
       <div class="sk sk-sub"></div>
@@ -298,7 +298,7 @@
       <div class="sk sk-line"></div>
       <div class="sk sk-line short"></div>
       <div class="sk sk-block"></div>
-    </div>`}function pl(e){const n=e.rich,o=[],s=Se.manifest.levels,l=s?.cn?.levels.find(E=>Number(E.id)===e.levelCn);l&&o.push(`<a class="badge level" href="#/level/cn/${encodeURIComponent(l.id)}">${y(l.code)} · ${y(vr("cn",l))}</a>`);const c=(e.levelCefr||n?.cefr||"").toUpperCase();if(c){const E=s?.cefr?.levels.find($=>$.code===c);o.push(E?`<a class="badge cefr" href="#/level/cefr/${encodeURIComponent(E.id)}">${y(c)}</a>`:`<span class="badge cefr">${y(c)}</span>`)}n?.topic&&o.push(`<span class="badge topic">${y(Xa(n.topic))}</span>`);for(const E of e.tags){const $=sr(E.toLowerCase());$&&o.push(`<span class="badge tag">${y($)}</span>`)}const d=e.phoneticUk,g=e.phoneticUs,b=!!(d&&g&&d.replace(/\//g,"")===g.replace(/\//g,"")),u=!d&&!g?e.phonetic:"",v=[];if(d){const E=b?p("读音","Pronunciation"):p("英","UK");v.push(`<button type="button" class="phon" data-speak="uk">
+    </div>`}function ml(e){const n=e.rich,o=[],s=Se.manifest.levels,l=s?.cn?.levels.find(E=>Number(E.id)===e.levelCn);l&&o.push(`<a class="badge level" href="#/level/cn/${encodeURIComponent(l.id)}">${y(l.code)} · ${y(vr("cn",l))}</a>`);const c=(e.levelCefr||n?.cefr||"").toUpperCase();if(c){const E=s?.cefr?.levels.find($=>$.code===c);o.push(E?`<a class="badge cefr" href="#/level/cefr/${encodeURIComponent(E.id)}">${y(c)}</a>`:`<span class="badge cefr">${y(c)}</span>`)}n?.topic&&o.push(`<span class="badge topic">${y(Xa(n.topic))}</span>`);for(const E of e.tags){const $=sr(E.toLowerCase());$&&o.push(`<span class="badge tag">${y($)}</span>`)}const d=e.phoneticUk,g=e.phoneticUs,b=!!(d&&g&&d.replace(/\//g,"")===g.replace(/\//g,"")),u=!d&&!g?e.phonetic:"",v=[];if(d){const E=b?p("读音","Pronunciation"):p("英","UK");v.push(`<button type="button" class="phon" data-speak="uk">
         <span class="phon-label">${E}</span><span class="phon-ipa">${y(d)}</span><span class="phon-icon">${j("speaker")}</span>
       </button>`)}return g&&!b&&v.push(`<button type="button" class="phon" data-speak="us">
         <span class="phon-label">${p("美","US")}</span><span class="phon-ipa">${y(g)}</span><span class="phon-icon">${j("speaker")}</span>
@@ -313,11 +313,11 @@
         ${gr(e.word,"copy-btn-head")}
       </div>
       <div class="phonetics">${v.join("")}</div>
-    </header>`}function ml(e){const n=e.forms??(e.form?[e.form]:[]);if(!n.length)return"";const o=[];for(const s of n.slice(0,3)){const l=Ln(s.kind);s.lemma===e.entry.wordLc?o.push(`<div class="fn-line"><span>${p(`<b>${y(e.requested)}</b> 是 <b>${y(e.entry.word)}</b> 的${y(l)}`,`<b>${y(e.requested)}</b> is the ${y(l)} of <b>${y(e.entry.word)}</b>`)}</span></div>`):o.push(`<div class="fn-line"><span>${p(`<b>${y(e.requested)}</b> 也是 <b>${y(s.lemma)}</b> 的${y(l)}`,`<b>${y(e.requested)}</b> is also the ${y(l)} of <b>${y(s.lemma)}</b>`)}</span>
+    </header>`}function vl(e){const n=e.forms??(e.form?[e.form]:[]);if(!n.length)return"";const o=[];for(const s of n.slice(0,3)){const l=Ln(s.kind);s.lemma===e.entry.wordLc?o.push(`<div class="fn-line"><span>${p(`<b>${y(e.requested)}</b> 是 <b>${y(e.entry.word)}</b> 的${y(l)}`,`<b>${y(e.requested)}</b> is the ${y(l)} of <b>${y(e.entry.word)}</b>`)}</span></div>`):o.push(`<div class="fn-line"><span>${p(`<b>${y(e.requested)}</b> 也是 <b>${y(s.lemma)}</b> 的${y(l)}`,`<b>${y(e.requested)}</b> is also the ${y(l)} of <b>${y(s.lemma)}</b>`)}</span>
         <a class="fn-link" href="#/w/${encodeURIComponent(s.lemma)}">${p(`查看 ${y(s.lemma)}`,`View ${y(s.lemma)}`)}</a></div>`)}return o.length?`<div class="form-note">
       <span class="fn-tag">${p("词形","Form")}</span>
       <div class="fn-lines">${o.join("")}</div>
-    </div>`:""}function vl(e){if(J())return"";const n=e.rich?.meanings_zh||e.translation,o=Qo(n);return o.length?`<section class="section">
+    </div>`:""}function gl(e){if(J())return"";const n=e.rich?.meanings_zh||e.translation,o=Qo(n);return o.length?`<section class="section">
       ${mt("释义","Meaning")}
       <div class="sense-groups">
         ${o.map(s=>`<div class="sense-group">
@@ -325,10 +325,10 @@
               <ol class="sense-list">${s.senses.map(l=>`<li>${y(l)}</li>`).join("")}</ol>
             </div>`).join("")}
       </div>
-    </section>`:""}function gl(e){const n=Vo(e.rich?.definition_en||e.definition);return n.length?`<section class="section">
+    </section>`:""}function wl(e){const n=Vo(e.rich?.definition_en||e.definition);return n.length?`<section class="section">
       ${mt("英英释义","Definition")}
       <ol class="def-list">${n.map((o,s)=>`<li><span class="def-num">${String(s+1).padStart(2,"0")}</span><p>${y(o)}</p></li>`).join("")}</ol>
-    </section>`:""}function wl(e,n){const o=e.rich;if(!o)return"";const s=[];if(o.example1_en&&s.push([o.example1_en,o.example1_zh??""]),o.example2_en&&s.push([o.example2_en,o.example2_zh??""]),!s.length)return"";const l=[e.word,...Xo(e).flatMap(c=>c.forms),...n];return`<section class="section">
+    </section>`:""}function bl(e,n){const o=e.rich;if(!o)return"";const s=[];if(o.example1_en&&s.push([o.example1_en,o.example1_zh??""]),o.example2_en&&s.push([o.example2_en,o.example2_zh??""]),!s.length)return"";const l=[e.word,...Xo(e).flatMap(c=>c.forms),...n];return`<section class="section">
       ${mt("例句","Examples")}
       <div class="examples">
         ${s.map(([c,d])=>`<figure class="example">
@@ -336,7 +336,7 @@
               ${!J()&&d?`<figcaption>${y(d)}</figcaption>`:""}
             </figure>`).join("")}
       </div>
-    </section>`}function bl(e){const n=Wa(e.rich?.collocations??"");return n.length?`<section class="section">
+    </section>`}function yl(e){const n=Wa(e.rich?.collocations??"");return n.length?`<section class="section">
       ${mt("常用搭配","Collocations")}
       <div class="colloc-list">
         ${n.map(o=>`<div class="colloc">
@@ -344,7 +344,7 @@
               ${o.zh&&!J()?`<span class="c-zh">${y(o.zh)}</span>`:""}
             </div>`).join("")}
       </div>
-    </section>`:""}function yl(e){return e.length?`<section class="section">
+    </section>`:""}function $l(e){return e.length?`<section class="section">
       ${mt("词形变化","Word forms")}
       <dl class="inflect-list">
         ${e.map(n=>`<div class="inflect">
@@ -352,7 +352,7 @@
               <dd>${n.forms.map(o=>`<a href="#/w/${encodeURIComponent(o)}" class="word-link">${y(o)}</a>`).join('<span class="dot">·</span>')}</dd>
             </div>`).join("")}
       </dl>
-    </section>`:""}function $l(e){const n=e.rich;if(!n)return"";const o=Ya(n.word_family??""),s=ho(n.synonyms??""),l=ho(n.antonyms??"");if(!o.length&&!s.length&&!l.length)return"";const c=(d,g="")=>`<a class="chip word-chip" href="#/w/${encodeURIComponent(d)}">${y(d)}${g}</a>`;return`<section class="section">
+    </section>`:""}function El(e){const n=e.rich;if(!n)return"";const o=Ya(n.word_family??""),s=ho(n.synonyms??""),l=ho(n.antonyms??"");if(!o.length&&!s.length&&!l.length)return"";const c=(d,g="")=>`<a class="chip word-chip" href="#/w/${encodeURIComponent(d)}">${y(d)}${g}</a>`;return`<section class="section">
       ${mt("词族与关联","Related words")}
       ${o.length?`<div class="relation">
               <span class="relation-label">${p("词族","Family")}</span>
@@ -366,10 +366,10 @@
               <span class="relation-label">${p("反义","Antonyms")}</span>
               <div class="chip-row">${l.map(d=>`<a class="chip word-chip muted" href="#/w/${encodeURIComponent(d)}">${y(d)}</a>`).join("")}</div>
             </div>`:""}
-    </section>`}function El(e){if(J())return"";const n=e.rich?.tip_zh;return n?`<aside class="tip">
+    </section>`}function Sl(e){if(J())return"";const n=e.rich?.tip_zh;return n?`<aside class="tip">
       <span class="tip-icon">${j("spark")}</span>
       <div class="tip-body"><span class="tip-label">用法提示</span><p>${y(n)}</p></div>
-    </aside>`:""}function Sl(e){const n=!!e.rich,o=!!e.translation&&n&&!J(),s=!!e.detail;if(!o&&!s)return"";const l=o?Qo(e.translation):[],c=n&&!J()?Vo(e.definition):[];return`<details class="more-dict">
+    </aside>`:""}function kl(e){const n=!!e.rich,o=!!e.translation&&n&&!J(),s=!!e.detail;if(!o&&!s)return"";const l=o?Qo(e.translation):[],c=n&&!J()?Vo(e.definition):[];return`<details class="more-dict">
       <summary><span>${p("更多词典释义","More from the dictionary")}</span>${j("chevron")}</summary>
       <div class="more-body">
         ${l.map(d=>`<div class="sense-group compact">
@@ -379,41 +379,41 @@
         ${c.length?`<div class="more-defs">${c.map(d=>`<p>${y(d)}</p>`).join("")}</div>`:""}
         ${s?`<p class="more-detail">${y(e.detail)}</p>`:""}
       </div>
-    </details>`}function kl(e){const n=[];if(e.collins>0){const o="★".repeat(e.collins)+"☆".repeat(Math.max(0,5-e.collins));n.push(`<div class="meta-item"><span>${p("柯林斯星级","Collins stars")}</span><strong class="stars">${o}</strong></div>`)}return e.oxford&&n.push(`<div class="meta-item"><span>${p("牛津核心词","Oxford core")}</span><strong>${p("是","Yes")}</strong></div>`),e.frq>0&&n.push(`<div class="meta-item"><span>COCA ${p("词频","rank")}</span><strong>#${e.frq.toLocaleString("en-US")}</strong></div>`),e.bnc>0&&n.push(`<div class="meta-item"><span>BNC ${p("词频","rank")}</span><strong>#${e.bnc.toLocaleString("en-US")}</strong></div>`),n.length?`<section class="dict-meta">
+    </details>`}function Ll(e){const n=[];if(e.collins>0){const o="★".repeat(e.collins)+"☆".repeat(Math.max(0,5-e.collins));n.push(`<div class="meta-item"><span>${p("柯林斯星级","Collins stars")}</span><strong class="stars">${o}</strong></div>`)}return e.oxford&&n.push(`<div class="meta-item"><span>${p("牛津核心词","Oxford core")}</span><strong>${p("是","Yes")}</strong></div>`),e.frq>0&&n.push(`<div class="meta-item"><span>COCA ${p("词频","rank")}</span><strong>#${e.frq.toLocaleString("en-US")}</strong></div>`),e.bnc>0&&n.push(`<div class="meta-item"><span>BNC ${p("词频","rank")}</span><strong>#${e.bnc.toLocaleString("en-US")}</strong></div>`),n.length?`<section class="dict-meta">
       ${mt("词典信息","Dictionary info")}
       <div class="meta-grid">${n.join("")}</div>
-    </section>`:""}function Ll(e){const{entry:n}=e,o=Ko(n),s=o&&o.kind.includes("s")?[]:Xo(n).map(l=>({...l,forms:l.forms.filter(c=>c.toLowerCase()!==n.wordLc)})).filter(l=>l.forms.length);return`<article class="word-card">
-      ${pl(n)}
-      ${fl(n.word)}
-      ${ml(e)}
-      ${vl(n)}
+    </section>`:""}function _l(e){const{entry:n}=e,o=Ko(n),s=o&&o.kind.includes("s")?[]:Xo(n).map(l=>({...l,forms:l.forms.filter(c=>c.toLowerCase()!==n.wordLc)})).filter(l=>l.forms.length);return`<article class="word-card">
+      ${ml(n)}
+      ${hl(n.word)}
+      ${vl(e)}
       ${gl(n)}
-      ${wl(n,e.requested===n.wordLc?[]:[e.requested])}
-      ${bl(n)}
-      ${yl(s)}
-      ${$l(n)}
+      ${wl(n)}
+      ${bl(n,e.requested===n.wordLc?[]:[e.requested])}
+      ${yl(n)}
+      ${$l(s)}
       ${El(n)}
       ${Sl(n)}
       ${kl(n)}
+      ${Ll(n)}
     </article>
-    ${at()}`}function _l(e){return e.length?`<div class="suggest-list">
+    ${at()}`}function Ml(e){return e.length?`<div class="suggest-list">
       ${e.map(n=>{const o=n.lemma?`<span class="sp-sub">${y(Ln(n.kind??""))} · ${y(n.lemma)}</span>`:J()?"":`<span class="sp-sub">${y((n.translation??"").split(`
 `)[0].replace(/^[a-z]+\.\s*/i,""))}</span>`;return`<a class="suggest-pill" href="#/w/${encodeURIComponent(n.lemma??n.word)}">
             <span class="sp-word">${y(n.word)}</span>
             ${o}
             ${j("arrow")}
           </a>`}).join("")}
-    </div>`:""}function Ml(e,n){const o=Ve(e),s=o?p("词典按中文释义反查英文单词，换个更常见的说法或更短的关键词试试。","Chinese lookup is off while English-only is on. Try an English word instead."):p("检查一下拼写，或试试它的原形。词典收录常见词、短语与词形变化。","Check the spelling, or try the base form. The dictionary covers common words, phrases and inflections.");return`<div class="notfound">
+    </div>`:""}function Al(e,n){const o=Ve(e),s=o?p("词典按中文释义反查英文单词，换个更常见的说法或更短的关键词试试。","Chinese lookup is off while English-only is on. Try an English word instead."):p("检查一下拼写，或试试它的原形。词典收录常见词、短语与词形变化。","Check the spelling, or try the base form. The dictionary covers common words, phrases and inflections.");return`<div class="notfound">
       <p class="eyebrow"><span class="eyebrow-rule"></span>NOT FOUND</p>
       <h1>${p("没有找到","Not found")}<br /><span class="nf-query">“${y(e)}”</span></h1>
       <p class="nf-hint">${s}</p>
-      ${n.length?`<div class="nf-block"><h2>${p(o?"相关单词":"你是不是想找",o?"Related words":"Did you mean")}</h2>${_l(n)}</div>`:""}
+      ${n.length?`<div class="nf-block"><h2>${p(o?"相关单词":"你是不是想找",o?"Related words":"Did you mean")}</h2>${Ml(n)}</div>`:""}
       <a class="ghost-btn solid" href="#/">${j("back")}<span>${p("返回首页","Back to home")}</span></a>
-    </div>`}function Al(e){const n=st("div","shell word-page");n.innerHTML=`${Ft()}<main class="word-main">${hl()}</main>`;const o=n.querySelector(".topbar-title"),s=n.querySelector(".word-main");let l=e;n.querySelector("[data-share]")?.addEventListener("click",()=>{ei(l)}),wr(n);const c=(async()=>{const d=await Se.lookup(e);if(!n.isConnected)return;if(d.status==="found"){const{entry:u}=d;l=u.word,o.textContent=u.word,document.title=`${u.word} · EnDict`,Ui(d.form?d.requested:u.word),s.innerHTML=Ll(d)}else if(d.status==="notfound")o.textContent=d.query||e,document.title=p(`${e} · 未收录 · EnDict`,`${e} · Not found · EnDict`),s.innerHTML=Ml(d.query,d.suggestions),n.querySelector(".wordbar")?.classList.add("is-scrolled");else{location.replace("#/");return}const g=n.querySelector("[data-headword]"),b=n.querySelector(".wordbar");g&&b&&"IntersectionObserver"in window&&new IntersectionObserver(([v])=>b.classList.toggle("is-scrolled",!v.isIntersecting),{rootMargin:"-64px 0px 0px 0px",threshold:0}).observe(g),n.querySelectorAll("[data-speak]").forEach(u=>{u.addEventListener("click",()=>{const v=u.dataset.speak==="us"?"us":"uk";Za(l,v,u)})})})();return br(n,c),n}const vs="ciyu.theme",ur=document.querySelector("#app");function gs(e){document.querySelectorAll("[data-cache-status]").forEach(n=>{n.textContent=ss(e),n.dataset.state=e.state})}function ws(e){document.documentElement.dataset.theme=e,document.querySelectorAll('meta[name="theme-color"]').forEach(o=>o.remove());const n=document.createElement("meta");n.name="theme-color",n.content=e==="dark"?"#101617":"#f4efe4",document.head.append(n),Er()}function Cl(){let e=null;try{e=localStorage.getItem(vs)}catch{e=null}const n=e==="light"||e==="dark"?e:window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";ws(n)}document.addEventListener("click",e=>{e.target.closest("[data-back]")&&(e.preventDefault(),history.back())});document.addEventListener("click",e=>{if(!e.target.closest("[data-theme-toggle]"))return;const o=document.documentElement.dataset.theme==="dark"?"light":"dark";ws(o);try{localStorage.setItem(vs,o)}catch{}});document.addEventListener("click",e=>{e.target.closest("[data-lang-toggle]")&&(e.preventDefault(),Pa(!J()),En())});document.addEventListener("click",e=>{e.target.closest("[data-settings-open]")&&(e.preventDefault(),Ni(En))});function Er(){const e=document.documentElement.dataset.theme==="dark",n=!!document.fullscreenElement;document.querySelectorAll("[data-theme-label]").forEach(o=>{o.textContent=e?p("浅色模式","Light mode"):p("深色模式","Dark mode")}),document.querySelectorAll("[data-fullscreen-label]").forEach(o=>{o.textContent=n?p("退出全屏","Exit fullscreen"):p("进入全屏","Enter fullscreen")}),document.querySelectorAll("[data-lang-toggle]").forEach(o=>{o.setAttribute("aria-checked",String(J()))})}function bs(e){e.querySelector("[data-menu-pop]")?.setAttribute("hidden",""),e.querySelector("[data-menu-toggle]")?.setAttribute("aria-expanded","false")}function er(){document.querySelectorAll(".menu").forEach(bs)}document.addEventListener("click",e=>{const n=e.target,o=n.closest("[data-menu-toggle]");if(o){const s=o.closest(".menu"),l=s?.querySelector("[data-menu-pop]");if(!s||!l)return;const c=l.hidden;er(),l.hidden=!c,o.setAttribute("aria-expanded",String(c)),c&&l.querySelector('[role="menuitem"]')?.focus();return}if(n.closest("[data-menu-pop]")){n.closest('[role="menuitem"]')&&er();return}er()});document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;const n=document.querySelector(".menu [data-menu-pop]:not([hidden])")?.closest(".menu");n&&(bs(n),n.querySelector("[data-menu-toggle]")?.focus())});document.addEventListener("fullscreenchange",Er);document.addEventListener("click",e=>{if(!e.target.closest("button[data-fullscreen]"))return;if(document.fullscreenElement){document.exitFullscreen().catch(()=>{});return}const o=document.documentElement.requestFullscreen?.();o?o.catch(()=>ke(p("当前浏览器不支持全屏","Fullscreen is not supported in this browser"))):ke(p("当前浏览器不支持全屏","Fullscreen is not supported in this browser"))});function Tl(){"serviceWorker"in navigator&&window.addEventListener("load",()=>{navigator.serviceWorker.register("./sw.js").catch(e=>{console.warn("Service worker registration failed",e)})})}function xl(){if(!("serviceWorker"in navigator))return;const e=()=>performance.getEntriesByType("resource").map(n=>n.name).filter(n=>n.startsWith(location.origin)&&!new URL(n).pathname.includes("/data/")&&!n.endsWith("/sw.js"));navigator.serviceWorker.ready.then(n=>{const o=navigator.serviceWorker.controller??n.active;if(!o)return;const s=[...new Set(e())].slice(0,40);s.length&&o.postMessage({type:"endict:cache",urls:s})}).catch(()=>{})}function Rl(){const e=st("div","boot");return e.innerHTML=`<div class="boot-inner">
+    </div>`}function Cl(e){const n=st("div","shell word-page");n.innerHTML=`${Ft()}<main class="word-main">${pl()}</main>`;const o=n.querySelector(".topbar-title"),s=n.querySelector(".word-main");let l=e;n.querySelector("[data-share]")?.addEventListener("click",()=>{ei(l)}),wr(n);const c=(async()=>{const d=await Se.lookup(e);if(!n.isConnected)return;if(d.status==="found"){const{entry:u}=d;l=u.word,o.textContent=u.word,document.title=`${u.word} · EnDict`,Ui(d.form?d.requested:u.word),s.innerHTML=_l(d)}else if(d.status==="notfound")o.textContent=d.query||e,document.title=p(`${e} · 未收录 · EnDict`,`${e} · Not found · EnDict`),s.innerHTML=Al(d.query,d.suggestions),n.querySelector(".wordbar")?.classList.add("is-scrolled");else{location.replace("#/");return}const g=n.querySelector("[data-headword]"),b=n.querySelector(".wordbar");g&&b&&"IntersectionObserver"in window&&new IntersectionObserver(([v])=>b.classList.toggle("is-scrolled",!v.isIntersecting),{rootMargin:"-64px 0px 0px 0px",threshold:0}).observe(g),n.querySelectorAll("[data-speak]").forEach(u=>{u.addEventListener("click",()=>{const v=u.dataset.speak==="us"?"us":"uk";Za(l,v,u)})})})();return br(n,c),n}const vs="ciyu.theme",ur=document.querySelector("#app");function gs(e){document.querySelectorAll("[data-cache-status]").forEach(n=>{n.textContent=ss(e),n.dataset.state=e.state})}function ws(e){document.documentElement.dataset.theme=e,document.querySelectorAll('meta[name="theme-color"]').forEach(o=>o.remove());const n=document.createElement("meta");n.name="theme-color",n.content=e==="dark"?"#101617":"#f4efe4",document.head.append(n),Er()}function Tl(){let e=null;try{e=localStorage.getItem(vs)}catch{e=null}const n=e==="light"||e==="dark"?e:window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";ws(n)}document.addEventListener("click",e=>{e.target.closest("[data-back]")&&(e.preventDefault(),history.back())});document.addEventListener("click",e=>{if(!e.target.closest("[data-theme-toggle]"))return;const o=document.documentElement.dataset.theme==="dark"?"light":"dark";ws(o);try{localStorage.setItem(vs,o)}catch{}});document.addEventListener("click",e=>{e.target.closest("[data-lang-toggle]")&&(e.preventDefault(),Pa(!J()),En())});document.addEventListener("click",e=>{e.target.closest("[data-settings-open]")&&(e.preventDefault(),Ni(En))});function Er(){const e=document.documentElement.dataset.theme==="dark",n=!!document.fullscreenElement;document.querySelectorAll("[data-theme-label]").forEach(o=>{o.textContent=e?p("浅色模式","Light mode"):p("深色模式","Dark mode")}),document.querySelectorAll("[data-fullscreen-label]").forEach(o=>{o.textContent=n?p("退出全屏","Exit fullscreen"):p("进入全屏","Enter fullscreen")}),document.querySelectorAll("[data-lang-toggle]").forEach(o=>{o.setAttribute("aria-checked",String(J()))})}function bs(e){e.querySelector("[data-menu-pop]")?.setAttribute("hidden",""),e.querySelector("[data-menu-toggle]")?.setAttribute("aria-expanded","false")}function er(){document.querySelectorAll(".menu").forEach(bs)}document.addEventListener("click",e=>{const n=e.target,o=n.closest("[data-menu-toggle]");if(o){const s=o.closest(".menu"),l=s?.querySelector("[data-menu-pop]");if(!s||!l)return;const c=l.hidden;er(),l.hidden=!c,o.setAttribute("aria-expanded",String(c)),c&&l.querySelector('[role="menuitem"]')?.focus();return}if(n.closest("[data-menu-pop]")){n.closest('[role="menuitem"]')&&er();return}er()});document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;const n=document.querySelector(".menu [data-menu-pop]:not([hidden])")?.closest(".menu");n&&(bs(n),n.querySelector("[data-menu-toggle]")?.focus())});document.addEventListener("fullscreenchange",Er);document.addEventListener("click",e=>{if(!e.target.closest("button[data-fullscreen]"))return;if(document.fullscreenElement){document.exitFullscreen().catch(()=>{});return}const o=document.documentElement.requestFullscreen?.();o?o.catch(()=>ke(p("当前浏览器不支持全屏","Fullscreen is not supported in this browser"))):ke(p("当前浏览器不支持全屏","Fullscreen is not supported in this browser"))});function xl(){"serviceWorker"in navigator&&navigator.serviceWorker.register("./sw.js").catch(e=>{console.warn("Service worker registration failed",e)})}async function Rl(e=2e3){"serviceWorker"in navigator&&(navigator.serviceWorker.controller||await Promise.race([navigator.serviceWorker.ready.then(()=>new Promise(n=>{navigator.serviceWorker.controller?n():navigator.serviceWorker.addEventListener("controllerchange",()=>n(),{once:!0})})).catch(()=>{}),new Promise(n=>window.setTimeout(n,e))]))}function ql(){if(!("serviceWorker"in navigator))return;const e=()=>performance.getEntriesByType("resource").map(n=>n.name).filter(n=>n.startsWith(location.origin)&&!new URL(n).pathname.includes("/data/")&&!new URL(n).pathname.includes("/images/")&&!n.endsWith("/sw.js"));navigator.serviceWorker.ready.then(n=>{const o=navigator.serviceWorker.controller??n.active;if(!o)return;const s=[...new Set(e())].slice(0,40);s.length&&o.postMessage({type:"endict:cache",urls:s})}).catch(()=>{})}function Nl(){const e=st("div","boot");return e.innerHTML=`<div class="boot-inner">
       <span class="boot-mark">${j("book")}</span>
       <p class="boot-name">EnDict</p>
       <p class="boot-status"><span class="spinner small"></span>${p("正在准备词库…","Preparing dictionary…")}</p>
-    </div>`,e}const Qe={name:"home",value:"",scheme:"",id:"",params:new URLSearchParams};function ql(){const[e,n=""]=location.hash.replace(/^#/,"").split("?"),o=new URLSearchParams(n);if(e==="/levels"||e==="/levels/")return{...Qe,name:"levels",params:o};const s=e.match(/^\/levels\/([^/]+)\/?$/);if(s)try{return{...Qe,name:"levels",scheme:decodeURIComponent(s[1]),params:o}}catch{return{...Qe,name:"levels",params:o}}const l=e.match(/^\/level\/([^/]+)\/([^/]+)$/);if(l)try{return{...Qe,name:"level",scheme:decodeURIComponent(l[1]),id:decodeURIComponent(l[2]),params:o}}catch{return Qe}if(e.startsWith("/w/"))try{return{...Qe,name:"word",value:decodeURIComponent(e.slice(3))}}catch{return Qe}return e.startsWith("/browse/")?{...Qe,name:"browse",value:e.slice(8).slice(0,1)}:Qe}function En(){const e=ii(),n=ql();let o;n.name==="word"&&n.value?o=Al(n.value):n.name==="browse"&&/^[a-z]$/i.test(n.value)?o=Di(n.value):n.name==="levels"?o=ul(n.scheme||void 0):n.name==="level"?o=Vi(n.scheme,n.id,n.params):(o=Fi(),document.title=p("EnDict · 英语词典","EnDict · English Dictionary")),ur.replaceChildren(o),gs(Se.cacheStatus),Er(),e.restored?(yn(e.scrollY),di(o,e.scrollY)):(yn(0),o.classList.add("entering"),window.setTimeout(()=>o.classList.remove("entering"),420))}async function Nl(){xi(),Ua(),Cl(),hi(),Ti(),Tl(),ur.replaceChildren(Rl());let e=!1;Se.onCacheChange(n=>{gs(n),e&&n.state==="ready"?ke(p("词库已缓存到本地，查询不再下载数据","Dictionary cached locally. Lookups no longer download data.")):e&&n.state==="error"&&ke(p("词库缓存未完成，联网后会补齐","Dictionary caching unfinished. It will resume when you are online.")),e=n.state==="syncing"});try{await Se.init()}catch(n){console.error(n),ur.innerHTML=`<div class="boot boot-error">
+    </div>`,e}const Qe={name:"home",value:"",scheme:"",id:"",params:new URLSearchParams};function Bl(){const[e,n=""]=location.hash.replace(/^#/,"").split("?"),o=new URLSearchParams(n);if(e==="/levels"||e==="/levels/")return{...Qe,name:"levels",params:o};const s=e.match(/^\/levels\/([^/]+)\/?$/);if(s)try{return{...Qe,name:"levels",scheme:decodeURIComponent(s[1]),params:o}}catch{return{...Qe,name:"levels",params:o}}const l=e.match(/^\/level\/([^/]+)\/([^/]+)$/);if(l)try{return{...Qe,name:"level",scheme:decodeURIComponent(l[1]),id:decodeURIComponent(l[2]),params:o}}catch{return Qe}if(e.startsWith("/w/"))try{return{...Qe,name:"word",value:decodeURIComponent(e.slice(3))}}catch{return Qe}return e.startsWith("/browse/")?{...Qe,name:"browse",value:e.slice(8).slice(0,1)}:Qe}function En(){const e=ii(),n=Bl();let o;n.name==="word"&&n.value?o=Cl(n.value):n.name==="browse"&&/^[a-z]$/i.test(n.value)?o=Di(n.value):n.name==="levels"?o=ul(n.scheme||void 0):n.name==="level"?o=Vi(n.scheme,n.id,n.params):(o=Fi(),document.title=p("EnDict · 英语词典","EnDict · English Dictionary")),ur.replaceChildren(o),gs(Se.cacheStatus),Er(),e.restored?(yn(e.scrollY),di(o,e.scrollY)):(yn(0),o.classList.add("entering"),window.setTimeout(()=>o.classList.remove("entering"),420))}async function Dl(){xi(),Ua(),Tl(),hi(),Ti(),xl(),ur.replaceChildren(Nl());let e=!1;Se.onCacheChange(n=>{gs(n),e&&n.state==="ready"?ke(p("词库已缓存到本地，查询不再下载数据","Dictionary cached locally. Lookups no longer download data.")):e&&n.state==="error"&&ke(p("词库缓存未完成，联网后会补齐","Dictionary caching unfinished. It will resume when you are online.")),e=n.state==="syncing"});try{await Se.init()}catch(n){console.error(n),ur.innerHTML=`<div class="boot boot-error">
         <p class="boot-name">EnDict</p>
         <p>${p("词库初始化失败，请刷新页面重试。","Dictionary failed to load. Refresh the page to try again.")}</p>
-      </div>`,ke(p("词库初始化失败","Dictionary failed to load"));return}xl(),window.addEventListener("hashchange",En),En()}Nl();
+      </div>`,ke(p("词库初始化失败","Dictionary failed to load"));return}ql(),await Rl(),window.addEventListener("hashchange",En),En()}Dl();
