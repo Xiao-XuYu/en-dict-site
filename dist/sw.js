@@ -9,7 +9,7 @@
  *   blocks the page from requesting them directly).
  */
 
-const VERSION = 'endict-v3';
+const VERSION = 'endict-v4';
 const IMAGE_CACHE = 'endict-images-v1';
 const IMAGE_FILE = /\/images\/([a-z0-9][a-z0-9-]*\.webp)$/;
 const SHELL = [
